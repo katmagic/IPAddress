@@ -10,4 +10,11 @@ Gem::Specification.new do |s|
 	s.rubyforge_project = 'ip_address'
 	s.license = 'Unlicense (http://unlicense.org)'
 	s.files = 'lib/ip_address.rb'
+
+	if ENV['GEM_SIG_KEY']
+		s.signing_key = ENV['GEM_SIG_KEY']
+		s.cert_chain = ENV['GEM_CERT_CHAIN'].split(",") if ENV['GEM_CERT_CHAIN']
+	else
+		warn "environment variable $GEM_SIG_KEY unspecified; not signing gem"
+	end
 end
