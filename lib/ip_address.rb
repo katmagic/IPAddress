@@ -8,9 +8,6 @@ end
 
 # This class represents an IP address.
 class IPAddress
-	# Things that match this are (mostly) IPs.
-	IP_REGEXP = /^(?:\d{1,3}\.){3}\d{1,3}$/
-
 	class << self
 		# Is _addr_ an IP address?
 		def is_an_ip?(addr)
@@ -25,7 +22,7 @@ class IPAddress
 
 		# Is _addr_ a string representation of an IP (without a netmask)?
 		def is_a_string_ip?(addr)
-			!!( IP_REGEXP =~ addr and addr.split(".").all?{|x| x.to_i < 256} )
+			is_an_array_ip?( addr.split(".").map{|x| x.to_i} )
 		end
 
 		# Is this an array representation of an IP?
