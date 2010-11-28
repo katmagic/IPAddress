@@ -14,7 +14,7 @@ class IPAddress
 	class << self
 		# Is _addr_ an IP address?
 		def is_an_ip?(addr)
-			%w{ is_a_string_ip? }.each do |m|
+			%w{ is_a_string_ip? is_an_array_ip? }.each do |m|
 				if send(m, addr)
 					return true
 				end
@@ -26,6 +26,11 @@ class IPAddress
 		# Is _addr_ a string representation of an IP (without a netmask)?
 		def is_a_string_ip?(addr)
 			!!( IP_REGEXP =~ addr and addr.split(".").all?{|x| x.to_i < 256} )
+		end
+
+		# Is this an array representation of an IP?
+		def is_an_array_ip?(addr)
+			addr.length == 4 and addr.all?{|a| (0..255).include?(a)}
 		end
 	end
 
