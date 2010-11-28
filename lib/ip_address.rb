@@ -15,7 +15,7 @@ class IPAddress
 		# Is _addr_ an IP address?
 		def is_an_ip?(addr)
 			%w{ is_a_string_ip? is_an_array_ip? }.each do |m|
-				if send(m, addr)
+				if send(m, addr) rescue false
 					return true
 				end
 			end
