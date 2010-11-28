@@ -11,9 +11,22 @@ class IPAddress
 	# Things that match this are (mostly) IPs.
 	IP_REGEXP = /^(?:\d{1,3}\.){3}\d{1,3}$/
 
-	# Is _addr_ a string representation of an IP (without a netmask)?
-	def self.is_an_ip?(addr)
-		!!( IP_REGEXP =~ addr and addr.split(".").all?{|x| x.to_i < 256} )
+	class << self
+		# Is _addr_ an IP address?
+		def is_an_ip?(addr)
+			%w{ is_a_string_ip? }.each do |m|
+				if send(m, addr)
+					return true
+				end
+			end
+
+			false
+		end
+
+		# Is _addr_ a string representation of an IP (without a netmask)?
+		def is_a_string_ip?(addr)
+			!!( IP_REGEXP =~ addr and addr.split(".").all?{|x| x.to_i < 256} )
+		end
 	end
 
 	# our netmask
