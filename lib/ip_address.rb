@@ -117,6 +117,7 @@ class IPAddress
 	end
 
 	def ==(ip)
+		return false unless self.class.is_an_ip?(ip)
 		ip = self.class.new(ip) unless ip.is_a? self.class
 
 		ip.to_i == to_i and ip.netmask == @netmask
