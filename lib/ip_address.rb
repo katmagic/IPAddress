@@ -143,25 +143,21 @@ class IPAddress
 	# Fixnum (also described there) and a netmask.
 	# @return [Fixnum, Fixnum] something like [201613576, 32]
 	def any_to_int_and_netmask(ip)
-		case ip
-			when /^((?:\d+\.){3}\d+)(?:\/(\d+))?$/
-				m = $~
-				int_ip = array_to_int(m[1].split(".").map{|x| x.to_i})
-				nmask = (m[2] || 32).to_i
+		if self.class.is_a_string_ip?(ip)
+			quads = ip.split('.').map{|q| q.to_i}
+			return [32, array_to_int(quads)]
 
-				return int_ip, nmask
+		elsif self.class.is_an_array_ip?(ip)
+			return array_to_int(ip), 32
 
-			when Array
-				return array_to_int(ip), 32
+		elsif self.class.is_an_integer_ip?(ip)
+			return ip, 32
 
-			when Integer
-				return ip, 32
+		elsif self.class.is_an_ip_instance?(ip)
+			return ip.to_i, ip.netmask
 
-			when self.class
-				return ip.to_i, ip.netmask
-
-			else
-				raise NotAnIPError.new(ip)
+		else
+			raise NotAnIPError.new(ip)
 		end
 	end
 
