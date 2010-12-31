@@ -11,13 +11,19 @@ class IPAddress
 	class << self
 		# Is _addr_ an IP address?
 		def is_an_ip?(addr)
-			%w{ is_a_string_ip? is_an_array_ip? is_an_integer_ip? }.each do |m|
+			%w{ is_an_ip_instance? is_a_string_ip? is_an_array_ip?
+			    is_an_integer_ip?
+			  }.each do |m|
 				if send(m, addr) rescue false
 					return true
 				end
 			end
 
 			false
+		end
+
+		def is_an_ip_instance?(addr)
+			addr.is_a?(IPAddress)
 		end
 
 		# Is _addr_ a string representation of an IP (without a netmask)?
