@@ -11,13 +11,14 @@ class IPAddress
 	class << self
 		# Is _addr_ an IP address?
 		def is_an_ip?(addr)
-			%w{ is_an_ip_instance? is_a_string_ip? is_an_array_ip?
+			%w{
+					is_an_ip_instance? is_a_string_ip? is_an_array_ip?
 			    is_an_integer_ip?
 			  }.each do |m|
-				if send(m, addr) rescue false
-					return true
+					if ( send(m, addr) rescue false )
+						return true
+					end
 				end
-			end
 
 			false
 		end
@@ -84,9 +85,9 @@ class IPAddress
 	#  ip[3] = 8
 	#  ip #=> #<IPAddress: 12.4.97.8>
 	def []=(index, val)
-		if not (0..3) === index
+		if !((0..3) === index)
 			raise ArgumentError, "there are four parts to an IP address"
-		elsif not (0..256) === val
+		elsif !((0..256) === val)
 			raise ArgumentError, "each of the IP parts is between 0 and 256"
 		end
 
