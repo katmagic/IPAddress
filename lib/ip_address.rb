@@ -146,7 +146,7 @@ class IPAddress
 	def any_to_int_and_netmask(ip)
 		if self.class.is_a_string_ip?(ip)
 			quads = ip.split('.').map{|q| q.to_i}
-			return [32, array_to_int(quads)]
+			return [array_to_int(quads), 32]
 
 		elsif self.class.is_an_array_ip?(ip)
 			return array_to_int(ip), 32
