@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
 	s.name = 'ip_address'
-	s.version = '0.1.1'
+	s.version = '0.1.2'
 	s.date = Time.now.strftime("%a %b %d, %Y")
 	s.summary = 'Work with IP addresses.'
 	s.description = 'Easily manipulate IPv4 addresses.'
