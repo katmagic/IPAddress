@@ -27,6 +27,11 @@ class IPAddress
 
 		# Is _addr_ a string representation of an IP (without a netmask)?
 		def is_a_string_ip?(addr)
+			addr, mask = /^(\d+(?:\.\d+){3})(?:\/(\d+))?$/.match(addr).captures
+
+			# nil.to_i is 0.
+			return false unless (0..32) === mask.to_i
+
 			is_an_array_ip?( addr.split(".").map{|x| x.to_i} )
 		end
 
