@@ -157,8 +157,14 @@ class IPAddress
 	# @return [Fixnum, Fixnum] something like [201613576, 32]
 	def any_to_int_and_netmask(ip)
 		if self.class.is_a_string_ip?(ip)
+			if ip =~ /^(.+)\/(.+)$/
+				ip, mask = $1, $2.to_i
+			else
+				mask = 32
+			end
+
 			quads = ip.split('.').map{|q| q.to_i}
-			return [array_to_int(quads), 32]
+			return [array_to_int(quads), mask]
 
 		elsif self.class.is_an_array_ip?(ip)
 			return array_to_int(ip), 32
