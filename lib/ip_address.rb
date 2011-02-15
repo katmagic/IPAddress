@@ -15,9 +15,7 @@ class IPAddress
 					is_an_ip_instance? is_a_string_ip? is_an_array_ip?
 			    is_an_integer_ip?
 			  }.each do |m|
-					if ( send(m, addr) rescue false )
-						return true
-					end
+					return true if send(m, addr)
 				end
 
 			false
@@ -40,6 +38,15 @@ class IPAddress
 		# Is _addr_ and integer representation of an IP?
 		def is_an_integer_ip?(addr)
 			addr.integer? and (0 ... 256**4).include?(addr)
+		end
+
+		%w{
+			is_an_ip_instance? is_a_string_ip? is_an_array_ip? is_an_integer_ip?
+		}.each do |meth_name|
+			_m = instance_method(meth_name)
+			define_method(meth_name){ |*a,&b|
+				_m.bind(self).(*a, &b) rescue false
+			}
 		end
 	end
 
