@@ -13,7 +13,7 @@ class IPAddress
 		def is_an_ip?(addr)
 			%w{
 					is_an_ip_instance? is_a_string_ip? is_an_array_ip?
-			    is_an_integer_ip?
+					is_an_integer_ip?
 			  }.each do |m|
 					return true if send(m, addr)
 				end
